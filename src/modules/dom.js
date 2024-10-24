@@ -26,10 +26,12 @@ const dom = () => {
 
         // append task (done)
         else if (className === 'addTaskSvg') {
-            const addTask = document.querySelector('.container-addTask');
-            const addTasks = document.createElement('div');
-            if (!addTask.childElementCount) {
-                addTasks.innerHTML = `<div class="addTasks">
+            const title = document.querySelector('.title').firstElementChild.getAttribute("class");
+            if (title !== null) {
+                const addTask = document.querySelector('.container-addTask');
+                const addTasks = document.createElement('div');
+                if (!addTask.childElementCount) {
+                    addTasks.innerHTML = `<div class="addTasks">
                             <div class="addTasks-wrap">
                                 <input class="input-addTask1" type="text" placeholder="Title" />
                                 <input class="input-addTask2" type="text" placeholder="Description" />
@@ -48,9 +50,13 @@ const dom = () => {
                                 <button class="input-addTask-btn">Submit</button>
                             </div>
                         </div>`;
-                addTask.append(addTasks);
-            } else {
-                addTask.firstElementChild.remove();
+                    addTask.append(addTasks);
+                } else {
+                    addTask.firstElementChild.remove();
+                }
+            }
+            else {
+                const ptitle = document.querySelector('.title').firstElementChild.textContent = "Create/Open a project!";
             }
         }
 
@@ -255,7 +261,21 @@ const dom = () => {
                     const projectCounts =
                         document.querySelector('.projects-count');
                     projectCounts.textContent = storage.length;
-                    // if () storage.empty, show nothing
+                    if (!storage.length) {
+                        const title = document.querySelector('.title').firstElementChild;
+                        title.removeAttribute("class");
+                        title.textContent = "Create a project";
+                        const nrolist = document.querySelector('.nrOfList');
+                        nrolist.textContent = "";
+                        const container = document.querySelector('.container-tasks-info');
+                        while (container.childElementCount) {
+                            container.firstElementChild.remove();
+                        }
+                        const cnt = document.querySelector('.container-addTask');
+                        while (cnt.childElementCount) {
+                            cnt.firstElementChild.remove();
+                        }
+                    }
                     break;
                 }
             }
@@ -376,6 +396,7 @@ const dom = () => {
     const displayWithFilters = (titleCnt) => {
         const title = document.querySelector('.title').firstElementChild;
         title.textContent = titleCnt;
+        title.removeAttribute("class");
         const listHead = document.querySelector('.list-head').lastElementChild;
         const addSVG = document.querySelector('.addTaskSvg');
         if (addSVG !== null) {
@@ -426,28 +447,24 @@ const dom = () => {
                         const div = document.createElement('div');
                         div.classList.add(storage[i].tasks[j].taskID);
                         div.innerHTML = `<div>
-                                    <input class="sw" checked type="checkbox" />
                                     <p>${storage[i].tasks[j].name}</p>
                                     <p>${storage[i].tasks[j].desc}</p>
                                     <p>${storage[i].tasks[j].prop}</p>
                                 </div>
                                 <div>
                                     <p>${storage[i].tasks[j].date}</p>
-                                    <button class="btn-addtask">del</button>
                                     </div>`;
                         containerTasksInfo.append(div);
                     } else {
                         const div = document.createElement('div');
                         div.classList.add(storage[i].tasks[j].taskID);
                         div.innerHTML = `<div>
-                                    <input class="sw" type="checkbox" />
                                     <p>${storage[i].tasks[j].name}</p>
                                     <p>${storage[i].tasks[j].desc}</p>
                                     <p>${storage[i].tasks[j].prop}</p>
                                 </div>
                                 <div>
                                     <p>${storage[i].tasks[j].date}</p>
-                                    <button class="btn-addtask">del</button>
                                 </div>`;
                         containerTasksInfo.append(div);
                     }
