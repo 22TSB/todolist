@@ -1,3 +1,7 @@
+* {
+    user-select: none;
+}
+
 :root {
     --headerColorX: hsl(200, 100%, 50%);
     --headerColorY: hsl(170, 100%, 50%);
@@ -186,9 +190,19 @@ main {
 }
 
 /* display */
-.container-tasks-info {
+.container-tasks-info div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
     padding: 20px;
     font-size: 2rem;
+}
+
+.container-tasks-info div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .card-info {
@@ -196,11 +210,7 @@ main {
     justify-content: space-between;
 }
 
-.card-info div {
-    display: flex;
-    gap: 20px;
-}
-
+/* add project */
 .addProjectInput-div {
     padding-top: 12px;
     display: flex;
@@ -210,16 +220,52 @@ main {
     width: 174px;
 }
 
-.btn-addproject {
-    flex: 1;
+.btn-addproject,
+.btn-addtask {
     padding: 8px;   
     border: 2px solid black;
 }
 
-.btn-addproject:hover {
+.btn-addproject:hover,
+.btn-addtask:hover {
     cursor: pointer;
     background-color: black;
     color: white;
+    transition: var(--transition);
+}
+
+/* project list */
+.projects-links-div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.card-list {
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 20px;
+}
+
+.card-list div {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.8rem;
+    flex: 1;
+}
+
+.card-list p,
+.card-list button {
+    padding: 4px 20px;
+    border-radius: 20px;
+}
+
+.card-list p:hover,
+.card-list button:hover {
+        cursor: pointer;
+    color: white;
+    background-color: black;
     transition: var(--transition);
 }
 
