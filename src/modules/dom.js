@@ -1,5 +1,5 @@
 import { addProject, getID, ifToday, ifWeek } from './logic';
-import { storage } from './storage';
+import { saveToLocalStorage, storage } from './storage';
 
 const dom = () => {
     const body = document.querySelector('body');
@@ -104,6 +104,7 @@ const dom = () => {
                     } else {
                         storage[index].tasks[i].switch = 'off';
                     }
+                    saveToLocalStorage();
                     break;
                 }
             }
@@ -148,6 +149,7 @@ const dom = () => {
                 };
 
                 storage[index].tasks.push(obj);
+                saveToLocalStorage();
 
                 // DOM
                 const container = document.querySelector(
@@ -205,6 +207,7 @@ const dom = () => {
                     );
                     container.removeChild(taskid);
                     storage[index].tasks.splice(i, 1);
+                    saveToLocalStorage();
                     break;
                 }
             }
@@ -455,6 +458,24 @@ const dom = () => {
         const nrolist = document.querySelector('.nrOfList');
         nrolist.textContent = sum;
     };
+
+    const loadProjectsFromLocalStorage = () => {
+        if (storage.length > 0) {
+            const parent = document.querySelector('.projects-links-div');
+            storage.forEach((project) => {
+                const div = document.createElement('div');
+                div.innerHTML = `<div class="card-list">
+                                <div><p class="card-list-p ${project.id}">${project.project}</p></div>
+                                <div><button class="delProject ${project.id}">del</button></div>
+                        </div>`;
+                parent.append(div);
+            });
+            const projectCounts = document.querySelector('.projects-count');
+            projectCounts.textContent = storage.length;
+        }
+    };
+
+    loadProjectsFromLocalStorage();
 
     // open && close sidebar
     const burger = document.querySelector('.burger');
